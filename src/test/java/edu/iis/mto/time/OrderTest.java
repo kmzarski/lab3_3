@@ -47,9 +47,16 @@ public class OrderTest {
     }
 
     @Test
-    public void testStateAfterSubmitOrder(){
+    public void testStateAfterSubmitOrder() {
         fakeSystemClock.setDateTime(new DateTime(2019, 4, 23, 0, 0));
         order.submit();
         assertThat(order.getOrderState(), is(State.SUBMITTED));
+    }
+
+    @Test
+    public void testStateAfterAddItemOrder() {
+        fakeSystemClock.setDateTime(new DateTime(2019, 4, 23, 0, 0));
+        order.addItem(new OrderItem());
+        assertThat(order.getOrderState(), is(State.CREATED));
     }
 }
