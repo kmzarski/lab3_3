@@ -17,6 +17,11 @@ public class Order {
         orderState = State.CREATED;
     }
 
+    public Order(FakeSystemClock fakeSystemClock) {
+        this.fakeSystemClock = fakeSystemClock;
+        orderState = State.CREATED;
+    }
+
     public void addItem(OrderItem item) {
         requireState(State.CREATED, State.SUBMITTED);
 
@@ -66,4 +71,6 @@ public class Order {
     public static enum State {
         CREATED, SUBMITTED, CONFIRMED, REALIZED, CANCELLED
     }
+
+
 }

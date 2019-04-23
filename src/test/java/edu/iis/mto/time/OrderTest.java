@@ -1,0 +1,27 @@
+package edu.iis.mto.time;
+
+import org.joda.time.DateTime;
+import org.junit.Before;
+import org.junit.Test;
+
+import static org.junit.Assert.*;
+
+public class OrderTest {
+
+    private FakeSystemClock fakeSystemClock;
+    private Order order;
+
+    @Before
+    public void setUp() throws Exception {
+        fakeSystemClock = new FakeSystemClock();
+        order = new Order(fakeSystemClock);
+    }
+
+    @Test(expected = OrderExpiredException.class)
+    public void testForOrderExpiredExceptionThrowingForOneDay() {
+        fakeSystemClock.setDateTime(new DateTime(2019, 4, 23, 0, 0));
+        order.submit();
+        fakeSystemClock.setDateTime(new DateTime(2019, 4, 24, 1, 0));
+        order.confirm();
+    }
+}
