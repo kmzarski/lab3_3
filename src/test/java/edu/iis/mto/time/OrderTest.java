@@ -3,7 +3,10 @@ package edu.iis.mto.time;
 import org.joda.time.DateTime;
 import org.junit.Before;
 import org.junit.Test;
+import edu.iis.mto.time.Order.State;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.not;
 import static org.junit.Assert.*;
 
 public class OrderTest {
@@ -23,5 +26,23 @@ public class OrderTest {
         order.submit();
         fakeSystemClock.setDateTime(new DateTime(2019, 4, 24, 1, 0));
         order.confirm();
+    }
+
+    @Test
+    public void testCheckingStateAfterOneHour() {
+        fakeSystemClock.setDateTime(new DateTime(2019, 4, 23, 0, 0));
+        order.submit();
+        fakeSystemClock.setDateTime(new DateTime(2019, 4, 23, 1, 0));
+        order.confirm();
+        assertThat(order.getOrderState(), not(is(State.CANCELLED)));
+    }
+
+    @Test(expected = OrderStateException.class)
+    public void testForOrderStateExceptionThrowingAfterRealizeMethod() {
+        fakeSystemClock.setDateTime(new DateTime(2019, 4, 23, 0, 0));
+        order.submit();
+        fakeSystemClock.setDateTime(new DateTime(2019, 4, 23, 1, 0));
+        order.confirm();
+        order.realize();
     }
 }
