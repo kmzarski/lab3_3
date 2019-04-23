@@ -45,4 +45,11 @@ public class OrderTest {
         order.confirm();
         order.realize();
     }
+
+    @Test
+    public void testStateAfterSubmitOrder(){
+        fakeSystemClock.setDateTime(new DateTime(2019, 4, 23, 0, 0));
+        order.submit();
+        assertThat(order.getOrderState(), is(State.SUBMITTED));
+    }
 }
