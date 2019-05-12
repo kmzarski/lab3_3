@@ -2,14 +2,14 @@ package edu.iis.mto.time;
 
 import org.joda.time.DateTime;
 
-public class FakeSystemClock {
+public class SystemClock {
     private DateTime dateTime;
 
-    public FakeSystemClock() {
+    public SystemClock() {
         this.dateTime = new DateTime();
     }
 
-    public FakeSystemClock(DateTime dateTime) {
+    public SystemClock(DateTime dateTime) {
         this.dateTime = dateTime;
     }
 
